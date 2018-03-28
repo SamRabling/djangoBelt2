@@ -25,6 +25,7 @@ class RegistrationManager(models.Manager):
         if User.objects.filter(email=postData['email']) == []:
             error['ex_email'] = "You already have an account"
         return errors
+
     def log_basic_validator(self, postData):
         errors ={}
         if not EMAILREGEX.match(postData['email']):
@@ -34,10 +35,12 @@ class RegistrationManager(models.Manager):
         if bcrypt.checkpw(postData['Password'].encode(), password.encode()) != True:
             errors['Password'] = "Please revise your email and password"
         return errors
-    def item_basic_validator(self, postData):
+    def quote_basic_validator(self, postData):
         errors={}
-        if len(postData['name']) < 3:
-            errors['name'] = "The item name should be more than 3 characters"
+        if len(postData['quoted_by']) < 3:
+            errors['quoted_by'] = "The 'Quoted By' should not be empty. If you don't know the name of the person you can put 'Anonymous'."
+        if len(postData['text']) < 10:
+            errors['text'] = "You can't quote silence."
         return errors
         
 class User(models.Model):
@@ -52,14 +55,13 @@ class User(models.Model):
     def __str__(self):
         return "<User objects: {} {} {} {}>". format(self.first_name, self.last_name, self.email, self.created_at)
 
-# class Item(models.Model):
-#     name = models.CharField(max_length = 255)
-#     created_at = models.DateTimeField(auto_now_add = True)
-#     updated_at = models.DateTimeField(auto_now = True)
-#     owner = models.ForeignKey(User, related_name = "wisher")
-#     wishlist = models.ManyToManyField(User, related_name="wished")
-#     objects = RegistrationManager()
-#     def __str__(self):
-#         return "<Item objects: {} {} {}>". format(self.name, self.created_at, self.wishlist)
-
-
+class Quote(models.Model):
+    quoted_by= models.CharField(max_length = 255)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add = True)
+    updated_at = models.DateTimeField(auto_now = True)
+    owner = models.ForeignKey(User, related_name = "user_list")
+    quotelist = models.ManyToManyField(User, related_name="shared_quote")
+    objects = RegistrationManager()
+    def __str__(self):
+        return "<Item objects: {} {} {}>". format(self.quoted_by, self.text, self.created_at, self.owner, self.quotelist)

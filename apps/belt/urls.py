@@ -1,19 +1,21 @@
 from django.conf.urls import url
 from . import views           
 urlpatterns = [
-  ## LOGIN AND REGISTRATION ROUTES
+  ## LOGIN / REGISTRATION / LOGOUT ROUTES
   url(r'^process$', views.process),
   url(r'^create$', views.create),
+  url(r'^logout$', views.logout),
+  
   ## ADDING/DELETING DATA
-  # url(r'^destroy$', views.destroy),
-  # url(r'^wished_items/add$', views.add),
-  # url(r'^wished_items/add_to_wishlist$', views.add_to_wishlist),
-  # url(r'^wished_items/add_to_my_wishlist/(?P<id>\d+)$', views.add_to_my_wishlist),
-  # url(r'^wished_items/unwish/(?P<id>\d+)$', views.un_wish),
+  url(r'^add_quote$', views.add_quote),
+  url(r'^add_to_my_faves/(?P<id>\d+)$', views.add_to_my_faves),
+  url(r'^remove_from_faves/(?P<id>\d+)$', views.remove_from_faves),
+  
   ## PAGE ROUTES
   url(r'^$', views.index), 
   url(r'^home$', views.home), 
-#   url(r'^dashboard$', views.dashboard),
-#   url(r'^wished_items/(?P<id>\d+)$', views.item),
-#   url(r'^logout$', views.logout)
+  url(r'^user_quotes/(?P<id>\d+)$', views.user_quotes),
+  
 ]
+
+# 

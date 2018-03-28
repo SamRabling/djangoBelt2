@@ -4,9 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Belt Exam</title>
 </head>
+<style>
+    *{
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .header{
+        height:80px;
+    }
+    h2{
+        margin-right: 600px;
+        display: inline-block;
+    }
+
+    .logout{
+        display:inline-block;
+    }
+    
+    .quote_group{
+        margin:30px;
+        width:300px;
+        padding:20px;
+        display: inline-block;
+        border: 2px solid black;
+        vertical-align: top;
+
+    }
+
+    .quote_instance{
+        width:280px;
+        padding:10px;
+        border: 1px solid black;
+        margin-bottom: 20px;
+    }
+
+    .add_quote{
+        width:200px;
+        height: 200px; 
+        margin:30px;   
+    }
+
+    .field{
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .wrapper{
+        display: inline-block;
+        vertical-align: top;
+
+    }
+
+    /* .others_quotes{
+        height:500px;
+    } */
+</style>
 <body>
-    <p> hello!</p>
+    <div class="header">
+        <h2>Welcome, {{ user.first_name }}!</h2>
+        <p class="logout"><a href="/logout">Logout</a></p>
+    </div>
+    
+    <div class="quote_group">
+    <h3>Quotable Quotes</h3>
+        {% for quote in others %}
+        <div class="quote_instance">
+            <p>{{ quote.quoted_by }}: {{ quote.text }}</p>
+            <p>Posted by: <a href="users/{{user.id}}">{{ quote.owner.first_name }}</a></p>
+            <form action="add_to_my_faves/{{quote.id}}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Add to My Favorites"> 
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="wrapper">
+    <div class="quote_group">
+        <h3>Your Favorites</h3>
+         {% for quote in myquotes %}
+        <div class="quote_instance">
+            <p>{{ quote.quoted_by }}: {{ quote.text }}</p>
+            <p>Posted by:
+                <a href="user_quotes/{{user.id}}">{{ quote.owner.first_name }}</a>
+            </p>
+            <form action="remove_from_faves/{{user.id}}" method="POST">
+            {% csrf_token %}
+                <input type="submit" value="Remove from My Favorites">
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="add_quote">
+        <h4>Contribute a Quote:</h4>
+        <form action="/add_quote" method="POST">
+        {% csrf_token %}
+        
+        Quoted By:<input class="field" type="text" name="quoted_by">
+        
+        Quote:<input class="field" type="text" name="text">
+        <input class="field" type="submit" value="submit">
+        </form>
+    </div>
+    </div>
 </body>
 </html>

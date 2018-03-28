@@ -14,23 +14,16 @@
         display: block;
         margin-bottom: 10px;
     }
-
-    .wrapper{
+    .login{
         width:200px;
-        padding-left: 20px;
-        display: inline-block;
-    }
-
-    .wrapper2{
-        width:200px;
-        border-right: 2px solid black;
         padding-left: 20px;
         display: inline-block;
     }
     .registration{
+        border-right: 2px solid black;
         display: inline-block;
-        width: 620px;
-        height: 250px;
+        width: 220px;
+        height: auto;
         vertical-align: top;
     }
 
@@ -46,29 +39,29 @@
             {% endfor %}
     </ul>
     {% endif %}
-    <h2>Registration</h2>
+    
     <div class="registration">
-    <form class= "wrapper2" action="/create" method="POST">
-        {% csrf_token %} First name:
-        <input class="field" type="text" name="first_name"> Last name:
-        <input class="field" type="text" name="last_name"> Email:
-        <input class="field" type="text" name="email"> Password:
-        <input class="field" type="text" name="Password"> Confirm PW:
-        <input class="field" type="text" name="confirm_pw"> Birthday:
-        <input class="field" type="date" name="birthday">
-        <input type="submit">
-    </form>
-    <br>
-    <br>
-
-    <form class="wrapper" action="/process" method="POST">
-        {% csrf_token %} 
-        Email:<input class="field" type="text" name="email"> 
-        Password:
-        <input class="field" type="text" name="Password">
-        <input class="field" type="submit">
-    </form>
-    <p>This is a change to practice</p>
+        <h2>Registration</h2>
+        <form action="/create" method="POST">
+            {% csrf_token %} First name:
+            <input class="field" type="text" name="first_name"> Last name:
+            <input class="field" type="text" name="last_name"> Email:
+            <input class="field" type="text" name="email"> Password:
+            <input class="field" type="text" name="Password"> Confirm PW:
+            <input class="field" type="text" name="confirm_pw"> Birthday:
+            <input class="field" type="date" name="birthday">
+            <input type="submit">
+        </form>
+    </div>
+    <div class="login">
+        <h2>Log In</h2>
+        <form action="/process" method="POST">
+            {% csrf_token %} 
+            Email:<input class="field" type="text" name="email"> 
+            Password:
+            <input class="field" type="text" name="Password">
+            <input class="field" type="submit">
+        </form>
     </div>
 
 </body>

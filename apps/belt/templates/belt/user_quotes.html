@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Belt Exam</title>
+</head>
+<style>
+    *{
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .header{
+        height:50px;
+    }
+    h2{
+        margin-right: 400px;
+        display: inline-block;
+    }
+
+    .logout{
+        display:inline-block;
+    }
+    .author{
+        color:red;
+    }
+</style>
+<body>
+    <div class="header">
+        <h2>Posts by {{ user.first_name }}</h2>
+        <p class="logout">
+            <a href="/home">Home</a> | <a href="/logout">Logout</a>
+        </p>
+    </div>
+    <p>Count: {{ count }}</p>
+    {% for quote in quotes %}
+    <div class="quote_instance">
+        <p><spam class="author">{{ quote.quoted_by }}:</spam> {{ quote.text }}</p>
+        <!-- <p>Posted by:
+            <a href="user_quotes/{{user.id}}">{{ quote.owner.first_name }}</a>
+        </p> -->
+    </div>
+    {% endfor %}
+</body>
+</html>
