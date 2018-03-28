@@ -71,7 +71,7 @@
         {% for quote in others %}
         <div class="quote_instance">
             <p>{{ quote.quoted_by }}: {{ quote.text }}</p>
-            <p>Posted by: <a href="users/{{user.id}}">{{ quote.owner.first_name }}</a></p>
+            <p>Posted by: <a href="user_quotes/{{user.id}}">{{ quote.owner.first_name }}</a></p>
             <form action="add_to_my_faves/{{quote.id}}" method="POST">
             {% csrf_token %}
             <input type="submit" value="Add to My Favorites"> 
@@ -86,7 +86,7 @@
         <div class="quote_instance">
             <p>{{ quote.quoted_by }}: {{ quote.text }}</p>
             <p>Posted by:
-                <a href="user_quotes/{{user.id}}">{{ quote.owner.first_name }}</a>
+                <a href="user_quotes/{{quote.owner.id}}">{{ quote.owner.first_name }}</a>
             </p>
             <form action="remove_from_faves/{{user.id}}" method="POST">
             {% csrf_token %}

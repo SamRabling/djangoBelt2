@@ -66,8 +66,8 @@ def user_quotes(request, id):
     if 'id' not in request.session:
         return redirect('/')
     else:
-        user = User.objects.get(id = request.session['id'])
-        quotes = Quote.objects.filter(owner_id= request.session['id'])
+        user = User.objects.get(id = id)
+        quotes = Quote.objects.filter(owner_id= id)
         count = user.user_list.count()
         context={
             'user':user,
@@ -94,7 +94,7 @@ def add_quote(request):
         if len(errors):
             for tag, errors in errors.iteritems():
                 messages.error(request, errors,  extra_tags=tag)
-                return redirect('home')
+                return redirect('/home')
         user = User.objects.get(id = request.session['id'])
         print "user saved"
         Quote.objects.create(quoted_by=request.POST['quoted_by'], text=request.POST['text'], owner= user)
@@ -102,7 +102,7 @@ def add_quote(request):
         print "quote saved"
         quote.quotelist.add(user)
         print "quote added"
-        return redirect('../home')
+        return redirect('/home')
 
 def add_to_my_faves(request, id):
     print "add_to_my_faves engaged"
